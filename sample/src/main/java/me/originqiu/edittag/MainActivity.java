@@ -2,7 +2,6 @@ package me.originqiu.edittag;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.widget.CompoundButton;
 import android.widget.Toast;
@@ -51,6 +50,7 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(MainActivity.this, deletedTagValue, Toast.LENGTH_SHORT).show();
             }
         });
+
         editTagView.setTagList(tagStrings);
 
         editTagView.addTag("hello world!");
@@ -60,6 +60,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        editTagView.setEditable(isChecked);
+        //editTagView.setEditable(isChecked);
     }
 }
