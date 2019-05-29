@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="me.originqiu.edittag.MainActivity">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="me.originqiu.edittag.MainViewModel" />
+    </data>
+
     <LinearLayout
-        android:animateLayoutChanges="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:animateLayoutChanges="true"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin">
 
         <me.originqiu.library.EditTag
             android:id="@+id/edit_tag_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="36dp"
+            app:hashTags="@{viewModel.configuration}"
             app:input_layout="@layout/view_sample_input_tag"
             app:tag_layout="@layout/view_sample_tag" />
 
@@ -29,14 +35,7 @@
             android:layout_height="2dp"
             android:layout_marginTop="4dp"
             android:background="@color/colorAccent" />
+
     </LinearLayout>
 
-    <android.support.v7.widget.SwitchCompat
-        android:id="@+id/status_switch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:checked="true"
-        android:padding="16dp"
-        android:text="open editable status" />
-
-</LinearLayout>
+</layout>

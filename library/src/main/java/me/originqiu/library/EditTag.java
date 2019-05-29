@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT) Copyright (c) 2015 OriginQiu Permission is hereby
  * granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software
@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -39,7 +40,7 @@ import java.util.List;
 /**
  * Created by OriginQiu on 4/7/16.
  */
-public class EditTag extends FrameLayout implements View.OnClickListener, TextView.OnEditorActionListener, View.OnKeyListener {
+public class EditTag extends FrameLayout implements View.OnClickListener, TextView.OnEditorActionListener, View.OnKeyListener, View.OnFocusChangeListener {
 
     private FlowLayout flowLayout;
 
@@ -74,7 +75,7 @@ public class EditTag extends FrameLayout implements View.OnClickListener, TextVi
         /**
          * Called when tag be deleted
          *
-         * @param deletedTagValue
+         * @param deletedTagValue string
          */
         void onTagDelete(String deletedTagValue);
     }
@@ -116,6 +117,7 @@ public class EditTag extends FrameLayout implements View.OnClickListener, TextVi
 
     private void setupListener() {
         editText.setOnEditorActionListener(this);
+        editText.setOnFocusChangeListener(this);
         editText.setOnKeyListener(this);
     }
 
@@ -182,6 +184,12 @@ public class EditTag extends FrameLayout implements View.OnClickListener, TextVi
         }
     }
 
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if(!hasFocus)
+            addTag(((EditText) v).getText().toString());
+    }
+
     private void removeSelectedTag() {
         int size = tagValueList.size();
         if (size > 0 && lastSelectTagView != null) {
@@ -236,8 +244,12 @@ public class EditTag extends FrameLayout implements View.OnClickListener, TextVi
         this.isEditableStatus = editable;
     }
 
+    public void addTagTextWatcher(TextWatcher tagTextWatcher) {
+        this.editText.addTextChangedListener(tagTextWatcher);
+    }
+
     public boolean addTag(String tagContent) {
-        if (TextUtils.isEmpty(tagContent)) {
+        if (TextUtils.isEmpty(tagContent) || getTagList().contains(tagContent)) {
             // do nothing, or you can tip "can't add empty tag"
             return false;
         } else {
