@@ -174,20 +174,20 @@ public class EditTag extends FrameLayout implements View.OnClickListener, TextVi
     }
 
     @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if(!hasFocus)
+            addTag(((EditText) v).getText().toString());
+    }
+
+    @Override
     public void onClick(View view) {
-        if (view.getTag() == null && isEditableStatus) {
+        if (isEditableStatus && view.getTag() == null) {
             if (lastSelectTagView == null) {
                 lastSelectTagView = (TextView) view;
 
                 removeSelectedTag();
             }
         }
-    }
-
-    @Override
-    public void onFocusChange(View v, boolean hasFocus) {
-        if(!hasFocus)
-            addTag(((EditText) v).getText().toString());
     }
 
     private void removeSelectedTag() {
